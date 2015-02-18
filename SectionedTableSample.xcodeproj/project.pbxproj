@@ -22,6 +22,12 @@
 		A746E8731A93AB26007D2588 /* GTLYouTube_Sources.m in Sources */ = {isa = PBXBuildFile; fileRef = A746E76C1A939D0C007D2588 /* GTLYouTube_Sources.m */; };
 		A746E8761A93CFC1007D2588 /* YouTubeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A746E8751A93CFC1007D2588 /* YouTubeViewController.m */; };
 		A746E8791A94EC09007D2588 /* ArticleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A746E8781A94EC09007D2588 /* ArticleViewController.m */; };
+		A746E87D1A950F44007D2588 /* SectionedTableSample.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A746E87B1A950F44007D2588 /* SectionedTableSample.xcdatamodeld */; };
+		A746E8801A951098007D2588 /* Videos.m in Sources */ = {isa = PBXBuildFile; fileRef = A746E87F1A951098007D2588 /* Videos.m */; };
+		A746E8861A9510EA007D2588 /* Articles.m in Sources */ = {isa = PBXBuildFile; fileRef = A746E8851A9510EA007D2588 /* Articles.m */; };
+		A746E8891A951152007D2588 /* Articles+Create.m in Sources */ = {isa = PBXBuildFile; fileRef = A746E8881A951152007D2588 /* Articles+Create.m */; };
+		A746E88C1A951177007D2588 /* Videos+Create.m in Sources */ = {isa = PBXBuildFile; fileRef = A746E88B1A951177007D2588 /* Videos+Create.m */; };
+		A746E88F1A951F19007D2588 /* CoreDataConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = A746E88E1A951F19007D2588 /* CoreDataConnection.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -421,6 +427,17 @@
 		A746E8751A93CFC1007D2588 /* YouTubeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YouTubeViewController.m; sourceTree = "<group>"; };
 		A746E8771A94EC09007D2588 /* ArticleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArticleViewController.h; sourceTree = "<group>"; };
 		A746E8781A94EC09007D2588 /* ArticleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArticleViewController.m; sourceTree = "<group>"; };
+		A746E87C1A950F44007D2588 /* SectionedTableSample.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SectionedTableSample.xcdatamodel; sourceTree = "<group>"; };
+		A746E87E1A951098007D2588 /* Videos.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Videos.h; sourceTree = "<group>"; };
+		A746E87F1A951098007D2588 /* Videos.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Videos.m; sourceTree = "<group>"; };
+		A746E8841A9510EA007D2588 /* Articles.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Articles.h; sourceTree = "<group>"; };
+		A746E8851A9510EA007D2588 /* Articles.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Articles.m; sourceTree = "<group>"; };
+		A746E8871A951152007D2588 /* Articles+Create.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Articles+Create.h"; sourceTree = "<group>"; };
+		A746E8881A951152007D2588 /* Articles+Create.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Articles+Create.m"; sourceTree = "<group>"; };
+		A746E88A1A951177007D2588 /* Videos+Create.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Videos+Create.h"; sourceTree = "<group>"; };
+		A746E88B1A951177007D2588 /* Videos+Create.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Videos+Create.m"; sourceTree = "<group>"; };
+		A746E88D1A951F19007D2588 /* CoreDataConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreDataConnection.h; sourceTree = "<group>"; };
+		A746E88E1A951F19007D2588 /* CoreDataConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreDataConnection.m; sourceTree = "<group>"; };
 		B9B6A5A7702AE24045ACD35C /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		DC9524CA08CDE10A3B885A31 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -489,6 +506,7 @@
 				A746E6D61A9395FA007D2588 /* Main.storyboard */,
 				A746E6D91A9395FA007D2588 /* Images.xcassets */,
 				A746E6DB1A9395FA007D2588 /* LaunchScreen.xib */,
+				A746E87A1A950F00007D2588 /* Core Data */,
 				A746E6C91A9395FA007D2588 /* Supporting Files */,
 			);
 			path = SectionedTableSample;
@@ -530,14 +548,8 @@
 		A746E6FB1A939A76007D2588 /* Main */ = {
 			isa = PBXGroup;
 			children = (
-				A746E6F51A939A10007D2588 /* MainTableViewController.h */,
-				A746E6F61A939A10007D2588 /* MainTableViewController.m */,
-				A746E6F81A939A69007D2588 /* BookmarksTableViewController.h */,
-				A746E6F91A939A69007D2588 /* BookmarksTableViewController.m */,
-				A746E8741A93CFC1007D2588 /* YouTubeViewController.h */,
-				A746E8751A93CFC1007D2588 /* YouTubeViewController.m */,
-				A746E8771A94EC09007D2588 /* ArticleViewController.h */,
-				A746E8781A94EC09007D2588 /* ArticleViewController.m */,
+				A746E8911A95245F007D2588 /* Controllers */,
+				A746E8901A952449007D2588 /* Models */,
 			);
 			name = Main;
 			sourceTree = "<group>";
@@ -972,6 +984,46 @@
 			path = Generated;
 			sourceTree = "<group>";
 		};
+		A746E87A1A950F00007D2588 /* Core Data */ = {
+			isa = PBXGroup;
+			children = (
+				A746E87B1A950F44007D2588 /* SectionedTableSample.xcdatamodeld */,
+				A746E8841A9510EA007D2588 /* Articles.h */,
+				A746E8851A9510EA007D2588 /* Articles.m */,
+				A746E87E1A951098007D2588 /* Videos.h */,
+				A746E87F1A951098007D2588 /* Videos.m */,
+				A746E8871A951152007D2588 /* Articles+Create.h */,
+				A746E8881A951152007D2588 /* Articles+Create.m */,
+				A746E88A1A951177007D2588 /* Videos+Create.h */,
+				A746E88B1A951177007D2588 /* Videos+Create.m */,
+			);
+			name = "Core Data";
+			sourceTree = "<group>";
+		};
+		A746E8901A952449007D2588 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				A746E88E1A951F19007D2588 /* CoreDataConnection.m */,
+				A746E88D1A951F19007D2588 /* CoreDataConnection.h */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		A746E8911A95245F007D2588 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				A746E6F51A939A10007D2588 /* MainTableViewController.h */,
+				A746E6F61A939A10007D2588 /* MainTableViewController.m */,
+				A746E6F81A939A69007D2588 /* BookmarksTableViewController.h */,
+				A746E6F91A939A69007D2588 /* BookmarksTableViewController.m */,
+				A746E8741A93CFC1007D2588 /* YouTubeViewController.h */,
+				A746E8751A93CFC1007D2588 /* YouTubeViewController.m */,
+				A746E8771A94EC09007D2588 /* ArticleViewController.h */,
+				A746E8781A94EC09007D2588 /* ArticleViewController.m */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1148,11 +1200,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A746E8891A951152007D2588 /* Articles+Create.m in Sources */,
 				A746E7011A939C94007D2588 /* GTLNetworking_Sources.m in Sources */,
+				A746E88F1A951F19007D2588 /* CoreDataConnection.m in Sources */,
+				A746E8801A951098007D2588 /* Videos.m in Sources */,
 				A746E6CF1A9395FA007D2588 /* AppDelegate.m in Sources */,
+				A746E87D1A950F44007D2588 /* SectionedTableSample.xcdatamodeld in Sources */,
+				A746E88C1A951177007D2588 /* Videos+Create.m in Sources */,
 				A746E6FA1A939A69007D2588 /* BookmarksTableViewController.m in Sources */,
 				A746E8791A94EC09007D2588 /* ArticleViewController.m in Sources */,
 				A746E6CC1A9395FA007D2588 /* main.m in Sources */,
+				A746E8861A9510EA007D2588 /* Articles.m in Sources */,
 				A746E8761A93CFC1007D2588 /* YouTubeViewController.m in Sources */,
 				A746E6FE1A939C7F007D2588 /* GTLCommon_Sources.m in Sources */,
 				A746E8711A93A43F007D2588 /* Project.m in Sources */,
@@ -1386,6 +1444,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		A746E87B1A950F44007D2588 /* SectionedTableSample.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				A746E87C1A950F44007D2588 /* SectionedTableSample.xcdatamodel */,
+			);
+			currentVersion = A746E87C1A950F44007D2588 /* SectionedTableSample.xcdatamodel */;
+			path = SectionedTableSample.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = A746E6BE1A9395FA007D2588 /* Project object */;
 }

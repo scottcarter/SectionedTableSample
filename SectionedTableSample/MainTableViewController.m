@@ -13,6 +13,10 @@
 #import "YouTubeViewController.h"
 #import "ArticleViewController.h"
 
+#import "AppDelegate.h"
+
+#import "CoreDataConnection.h"
+
 
 
 
@@ -63,6 +67,10 @@
 @property (nonatomic) BOOL validVideos;
 @property (strong, nonatomic) NSString *noArticlesRowText;
 @property (strong, nonatomic) NSString *noVideosRowText;
+
+
+// CoreDataConnection model
+@property (strong, nonatomic) CoreDataConnection *coreDataConnection;
 
 
 @end
@@ -158,6 +166,12 @@ NSUInteger const ArticleNumResults = 5; // 1 - 20
 #pragma mark Initializations
 
 
+- (void)dealloc
+{
+    PLOG_TOP("dealloc !!!!!!!")
+}
+
+
 // If text size changed, reload table cells
 //
 // Reference: http://useyourloaf.com/blog/2013/12/17/supporting-dynamic-type.html
@@ -211,11 +225,22 @@ NSUInteger const ArticleNumResults = 5; // 1 - 20
      }
      
      
- }
+}
 
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    //PLOG_TOP("")
+    
+    // Set our managedObjectContext from reference in AppDelegate.
+    //
+    AppDelegate *appDelegate= (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    self.managedObjectContext = appDelegate.managedObjectContext;
+    
+    
+    // Instance a CoreDataConnection model.
+    self.coreDataConnection = [[CoreDataConnection alloc] initWithManagedObjectContext:self.managedObjectContext];
     
     
     // Listen for changes to text size
@@ -263,16 +288,35 @@ NSUInteger const ArticleNumResults = 5; // 1 - 20
 
 - (void)bookmarkState:(BOOL)bookmarked forArticleId:(NSString *)articleId
 {
+    NSError *error = nil;
+    
+    // Lookup title, url
+    NSString *title = self.articleDict[articleId][@"title"];
+    NSString *url = self.articleDict[articleId][@"url"];
+    
+    // Update our dictionary
+    self.articleDict[articleId][@"bookmarked"] = [NSNumber numberWithBool:bookmarked];
+    
+    
+    // Update Core Data
     if(bookmarked){
-        self.articleDict[articleId][@"bookmarked"] = @YES;
+        [self.coreDataConnection findOrAddArticleWithIdentifier:articleId title:title url:url error:&error];
     }
     else {
-        self.articleDict[articleId][@"bookmarked"] = @NO;
+        [self.coreDataConnection deleteArticleWithIdentifier:articleId error:&error];
     }
-    
-    
+    if(error){
+        return; // Error
+    }
+
+
+    // Update self.articleArr
+    //
     [self updateArticleArr];
     
+    
+    // Update Table
+    //
     // Only necessary to update single cell.  We need to find the row that contains this articleId
     //
     // We will give a hint that the Block enumeration should be concurrent.
@@ -300,22 +344,43 @@ NSUInteger const ArticleNumResults = 5; // 1 - 20
 #pragma mark YouTubeViewControllerDelegate
 
 
+
 // Bookmark state has changed in selected video.
 //
 // Lookup entry in self.videoDict, set the bookmark state, update self.videoArr
 // and reload the table.
 - (void)bookmarkState:(BOOL)bookmarked forVideoId:(NSString *)videoId
 {
+    NSError *error = nil;
+    
+    // Lookup title, url
+    NSString *title = self.videoDict[videoId][@"title"];
+    NSString *thumbnailUrl = self.videoDict[videoId][@"thumbnailUrl"];
+    
+    // Update our dictionary
+    self.videoDict[videoId][@"bookmarked"] = [NSNumber numberWithBool:bookmarked];
+    
+    
+    // Update Core Data
     if(bookmarked){
-        self.videoDict[videoId][@"bookmarked"] = @YES;
+        [self.coreDataConnection findOrAddVideoWithIdentifier:videoId title:title thumbnailUrl:thumbnailUrl error:&error];
     }
     else {
-        self.videoDict[videoId][@"bookmarked"] = @NO;
+        [self.coreDataConnection deleteVideoWithIdentifier:videoId error:&error];
     }
+    if(error){
+        return; // Error
+    }
+
     
     
+    // Update self.videoArr
+    //
     [self updateVideoArr];
     
+    
+    // Update Table
+    //
     // Only necessary to update single cell.  We need to find the row that contains this videoId
     //
     // We will give a hint that the Block enumeration should be concurrent.
@@ -570,7 +635,54 @@ NSUInteger const ArticleNumResults = 5; // 1 - 20
     //
     // A future enhancement could cache the initial load from Core Data in memory, so that
     // we don't load from Core Data on every call to fetchContent.
-    TODO(fetch from Core Data)
+    //
+    NSError *error = nil;
+    NSArray *coreDataVideoArr = [self.coreDataConnection coreDataRecordArrForEntityName:@"Videos" predicate:nil properties:@[@"thumbnailUrl", @"title",@"videoId"] sortOnKey:nil ascending:YES includeObjectId:NO error:&error];
+    
+    // There are better ways to handle core data errors, but this will suffice for now.
+    if(error){
+        self.noVideosRowText = @"Problem fetching bookmarked data. Try reloading.";
+        self.noArticlesRowText = @"Problem fetching bookmarked data. Try reloading.";
+        return;
+    }
+    
+    NSArray *coreDataArticleArr = [self.coreDataConnection coreDataRecordArrForEntityName:@"Articles" predicate:nil properties:@[@"url", @"title",@"articleId"] sortOnKey:nil ascending:YES includeObjectId:NO error:&error];
+    
+    // There are better ways to handle core data errors, but this will suffice for now.
+    if(error){
+        self.noVideosRowText = @"Problem fetching bookmarked data. Try reloading.";
+        self.noArticlesRowText = @"Problem fetching bookmarked data. Try reloading.";
+        return;
+    }
+
+    // Add Core Data assets
+    
+    // Videos
+    for (NSDictionary *videoDict in coreDataVideoArr) {
+        // videoDict  contains videoId, title, thumbnailUrl
+        NSString *videoId = videoDict[@"videoId"];
+        NSString *title = videoDict[@"title"];
+        NSString *thumbnailUrl = videoDict[@"thumbnailUrl"];
+        
+        NSMutableDictionary *dict = [[NSMutableDictionary alloc] initWithDictionary:@{@"title":title, @"thumbnailUrl":thumbnailUrl, @"bookmarked":@YES}];
+        
+        [self.videoDict setObject:dict forKey:videoId];
+    }
+    
+
+    // Articles
+    for (NSDictionary *articleDict in coreDataArticleArr) {
+        // articleDict  contains articleId, title, url
+        NSString *articleId = articleDict[@"articleId"];
+        NSString *title = articleDict[@"title"];
+        NSString *url = articleDict[@"url"];
+        
+        NSMutableDictionary *dict = [[NSMutableDictionary alloc] initWithDictionary:@{@"title":title, @"url":url, @"bookmarked":@YES}];
+  
+        [self.articleDict setObject:dict forKey:articleId];
+    }
+    
+    
     
     // Fetch content from APIs
     [self fetchVideos];
@@ -716,7 +828,7 @@ NSUInteger const ArticleNumResults = 5; // 1 - 20
                 // If entry already exists for this articleId then we will assume we are bookmarked.
                 // In that case, we are just updating title, url.
                 //
-                if([self.articleDict objectForKey:@"articleId"]){
+                if([self.articleDict objectForKey:articleId]){
                     self.articleDict[articleId][@"title"] = title;
                     self.articleDict[articleId][@"url"] = url;
                 }
@@ -846,7 +958,7 @@ NSUInteger const ArticleNumResults = 5; // 1 - 20
                                            // If entry already exists for this videoId then we will assume we are bookmarked.
                                            // In that case, we are just updating title, thumbnailUrl.
                                            //
-                                           if([self.videoDict objectForKey:@"videoId"]){
+                                           if([self.videoDict objectForKey:videoId]){
                                                self.videoDict[videoId][@"title"] = title;
                                                self.videoDict[videoId][@"thumbnailUrl"] = thumbnailUrl;
                                            }

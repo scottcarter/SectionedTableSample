@@ -31,3 +31,8 @@ NSString *const NYTIMES_API_KEY = @"f118b4c8099478374677af25d9f5e938%3A14%3A7129
 //
 
 
+NSString *const CoreDataErrorDomain = @"scarter.SectionedTableSample.coreDataErrorDomain";
+
+NSString *const ApplicationErrorDomain = @"scarter.SectionedTableSample.applicationErrorDomain";
+
+

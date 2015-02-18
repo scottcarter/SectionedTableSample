@@ -78,6 +78,11 @@ FOUNDATION_EXPORT NSString *const NYTIMES_API_KEY;
 //
 
 
+FOUNDATION_EXPORT NSString *const CoreDataErrorDomain;
+
+FOUNDATION_EXPORT NSString *const ApplicationErrorDomain;
+
+
 
 // +++++++++++++++++++++++++++++++++++++++++++
 // Project specific logging macros

@@ -45,7 +45,7 @@
 #pragma mark -
 #pragma mark  Properties
 
-// None
+@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 
 
 // ==========================================================================

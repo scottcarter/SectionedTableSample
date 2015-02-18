@@ -77,6 +77,13 @@
 #pragma mark -
 #pragma mark Initializations
 
+
+- (void)dealloc
+{
+    PLOG_TOP("dealloc !!!!!!!")
+}
+
+
 /*
  #pragma mark - Navigation
  
@@ -90,6 +97,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    //PLOG_TOP("")
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;

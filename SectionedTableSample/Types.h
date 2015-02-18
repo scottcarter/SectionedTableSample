@@ -17,6 +17,30 @@
 //
 // Error domains in Project.h
 
+// CoreDataErrorDomain
+//
+
+typedef enum : NSUInteger {
+    CoreDataDatabaseCorrupt,
+    CoreDataFetchError,
+    CoreDataObtainPermanentIdError,
+    CoreDataSaveError,
+    CoreDataRemovePersistentStoreError,
+    CoreDataRemovePersistentStoreFileError,
+    CoreDataAddPersistentStoreError,
+    CoreDataObtainPermanentIDsForObjectsError
+} CoreDataError;
+
+
+
+// ApplicationErrorDomain
+//
+typedef enum : NSUInteger {
+    ApplicationFailed,
+    wrongNumberCoreDataMatchesError,
+} ApplicationError;
+
+
 
 
 
