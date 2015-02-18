@@ -1,0 +1,13 @@
+PODS:
+  - Unirest (1.1.4)
+  - youtube-ios-player-helper (0.1.1)
+
+DEPENDENCIES:
+  - Unirest (~> 1.1.4)
+  - youtube-ios-player-helper (~> 0.1.1)
+
+SPEC CHECKSUMS:
+  Unirest: 080f37fba1e7ac51a1a3e1554de096a18d2ce14c
+  youtube-ios-player-helper: 53aecd0b4763a77e6890e9a7c55abb7b5c4bedea
+
+COCOAPODS: 0.35.0
