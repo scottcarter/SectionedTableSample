@@ -28,6 +28,7 @@
 		A746E8891A951152007D2588 /* Articles+Create.m in Sources */ = {isa = PBXBuildFile; fileRef = A746E8881A951152007D2588 /* Articles+Create.m */; };
 		A746E88C1A951177007D2588 /* Videos+Create.m in Sources */ = {isa = PBXBuildFile; fileRef = A746E88B1A951177007D2588 /* Videos+Create.m */; };
 		A746E88F1A951F19007D2588 /* CoreDataConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = A746E88E1A951F19007D2588 /* CoreDataConnection.m */; };
+		A746E8951A957436007D2588 /* BookmarkedTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A746E8941A957436007D2588 /* BookmarkedTableViewCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -438,6 +439,8 @@
 		A746E88B1A951177007D2588 /* Videos+Create.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Videos+Create.m"; sourceTree = "<group>"; };
 		A746E88D1A951F19007D2588 /* CoreDataConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreDataConnection.h; sourceTree = "<group>"; };
 		A746E88E1A951F19007D2588 /* CoreDataConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreDataConnection.m; sourceTree = "<group>"; };
+		A746E8931A957436007D2588 /* BookmarkedTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookmarkedTableViewCell.h; sourceTree = "<group>"; };
+		A746E8941A957436007D2588 /* BookmarkedTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookmarkedTableViewCell.m; sourceTree = "<group>"; };
 		B9B6A5A7702AE24045ACD35C /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		DC9524CA08CDE10A3B885A31 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -548,6 +551,7 @@
 		A746E6FB1A939A76007D2588 /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				A746E8921A957403007D2588 /* Views */,
 				A746E8911A95245F007D2588 /* Controllers */,
 				A746E8901A952449007D2588 /* Models */,
 			);
@@ -1024,6 +1028,15 @@
 			name = Controllers;
 			sourceTree = "<group>";
 		};
+		A746E8921A957403007D2588 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				A746E8931A957436007D2588 /* BookmarkedTableViewCell.h */,
+				A746E8941A957436007D2588 /* BookmarkedTableViewCell.m */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1203,6 +1216,7 @@
 				A746E8891A951152007D2588 /* Articles+Create.m in Sources */,
 				A746E7011A939C94007D2588 /* GTLNetworking_Sources.m in Sources */,
 				A746E88F1A951F19007D2588 /* CoreDataConnection.m in Sources */,
+				A746E8951A957436007D2588 /* BookmarkedTableViewCell.m in Sources */,
 				A746E8801A951098007D2588 /* Videos.m in Sources */,
 				A746E6CF1A9395FA007D2588 /* AppDelegate.m in Sources */,
 				A746E87D1A950F44007D2588 /* SectionedTableSample.xcdatamodeld in Sources */,

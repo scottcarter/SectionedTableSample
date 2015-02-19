@@ -12,7 +12,7 @@
 
 #import "Project.h"
 
-
+#import "BookmarksTableViewController.h"
 
 
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -31,6 +31,14 @@
 @property (weak, nonatomic) IBOutlet YTPlayerView *youTubePlayerView;
 
 @property (weak, nonatomic) IBOutlet UISegmentedControl *bookmarkedControl;
+
+
+// We provide an outlet to label as a temporary measure,
+// so as to be able to hide it (and segmented control) when transitioning from Bookmarks tab.
+// We do this since their functionality is not yet complete when we
+// are instanced in that transition.
+@property (weak, nonatomic) IBOutlet UILabel *bookmarkedLabel;
+
 
 @end
 
@@ -80,10 +88,10 @@
 - (IBAction)bookmarkedControlAction:(UISegmentedControl *)sender {
     
     if(self.bookmarkedControl.selectedSegmentIndex == 0){
-        [self.delegate bookmarkState:YES forVideoId:self.videoId];
+        [self.delegate bookmarkState:YES forVideoId:self.videoId title:self.videoTitle thumbnailUrl:self.thumbnailUrl];
     }
     else {
-        [self.delegate bookmarkState:NO forVideoId:self.videoId];
+        [self.delegate bookmarkState:NO forVideoId:self.videoId title:self.videoTitle thumbnailUrl:self.thumbnailUrl];
     }
     
     //NLOG("selected index=%d",sender.selectedSegmentIndex)
@@ -113,11 +121,28 @@
         self.bookmarkedControl.selectedSegmentIndex = 1;
     }
     
+    // Temporarily hide segmented control and label if coming from Bookmarks tab.
+    UIViewController *backViewController = [self backViewController];
+    if([backViewController isKindOfClass:[BookmarksTableViewController class]]){
+        self.bookmarkedControl.hidden = YES;
+        self.bookmarkedLabel.hidden = YES;
+    }
+    
     // Load the video
     [self.youTubePlayerView loadWithVideoId:self.videoId];
     
 }
 
+
+- (UIViewController *)backViewController
+{
+    NSInteger numberOfViewControllers = self.navigationController.viewControllers.count;
+    
+    if (numberOfViewControllers < 2)
+        return nil;
+    else
+        return [self.navigationController.viewControllers objectAtIndex:numberOfViewControllers - 2];
+}
 
 
 // ==========================================================================

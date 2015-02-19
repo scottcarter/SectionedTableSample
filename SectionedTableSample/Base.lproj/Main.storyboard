@@ -52,18 +52,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="BookmarkedCell" textLabel="Pkf-5U-hth" style="IBUITableViewCellStyleDefault" id="Sh2-nn-ZDi">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="BookmarkedCell" id="Sh2-nn-ZDi" customClass="BookmarkedTableViewCell">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Sh2-nn-ZDi" id="6bt-GB-5Ef">
                                     <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Pkf-5U-hth">
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
                                 </tableViewCellContentView>
                             </tableViewCell>
                         </prototypes>
@@ -73,10 +65,14 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Bookmarks" id="mjN-xc-eBz"/>
+                    <connections>
+                        <segue destination="JVY-xH-gds" kind="show" identifier="articleBookmarkedSegue" id="gog-dZ-5ZC"/>
+                        <segue destination="wg0-xN-zek" kind="show" identifier="youtubeBookmarkedSegue" id="lbv-5l-b5b"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="I4B-rd-Ygn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1558" y="390"/>
+            <point key="canvasLocation" x="1558" y="389"/>
         </scene>
         <!--You Tube View Controller-->
         <scene sceneID="Yg8-Kz-sIZ">
@@ -131,6 +127,7 @@
                     </view>
                     <connections>
                         <outlet property="bookmarkedControl" destination="33N-bd-N3e" id="owB-yk-8s4"/>
+                        <outlet property="bookmarkedLabel" destination="Vhw-XP-byZ" id="lZU-el-iqi"/>
                         <outlet property="youTubePlayerView" destination="yux-x5-Dqx" id="ghU-QD-r1A"/>
                     </connections>
                 </viewController>
@@ -192,6 +189,7 @@
                     </view>
                     <connections>
                         <outlet property="bookmarkedControl" destination="cV4-nx-hql" id="4sc-rx-Izy"/>
+                        <outlet property="bookmarkedLabel" destination="JI2-aD-dua" id="3iO-iz-R9f"/>
                         <outlet property="webView" destination="ahH-sP-5DA" id="i9b-H3-JTG"/>
                     </connections>
                 </viewController>
@@ -261,4 +259,8 @@
         <image name="first" width="30" height="30"/>
         <image name="second" width="30" height="30"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="lbv-5l-b5b"/>
+        <segue reference="gog-dZ-5ZC"/>
+    </inferredMetricsTieBreakers>
 </document>

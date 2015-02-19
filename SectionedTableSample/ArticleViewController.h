@@ -29,7 +29,10 @@
 
 @protocol ArticleViewControllerDelegate <NSObject>
 
-- (void)bookmarkState:(BOOL)bookmarked forArticleId:(NSString *)articleId;
+- (void)bookmarkState:(BOOL)bookmarked
+         forArticleId:(NSString *)articleId
+                title:(NSString *)title
+                  url:(NSString *)url;
 
 @end
 
@@ -54,6 +57,7 @@
 // Properties that are set by view controller that we are pushed from.
 //
 @property (strong, nonatomic) NSString *articleId;
+@property (strong, nonatomic) NSString *articleTitle;
 @property (strong, nonatomic) NSString *url;
 
 @property (nonatomic) BOOL bookmarked;

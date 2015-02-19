@@ -29,7 +29,10 @@
 
 @protocol YouTubeViewControllerDelegate <NSObject>
 
-- (void)bookmarkState:(BOOL)bookmarked forVideoId:(NSString *)videoId;
+- (void)bookmarkState:(BOOL)bookmarked
+           forVideoId:(NSString *)videoId
+                title:(NSString *)title
+         thumbnailUrl:(NSString *)thumbnailUrl;
 
 @end
 
@@ -53,6 +56,8 @@
 // Properties that are set by view controller that we are pushed from.
 //
 @property (strong, nonatomic) NSString *videoId;
+@property (strong, nonatomic) NSString *videoTitle;
+@property (strong, nonatomic) NSString *thumbnailUrl;
 
 @property (nonatomic) BOOL bookmarked;
 

@@ -69,6 +69,9 @@
 @property (strong, nonatomic) NSString *noVideosRowText;
 
 
+@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+
+
 // CoreDataConnection model
 @property (strong, nonatomic) CoreDataConnection *coreDataConnection;
 
@@ -93,9 +96,9 @@
 
 // Table sections
 //
-NSUInteger const ProgressSection = 0;
-NSUInteger const VideoSection = 1;
-NSUInteger const ArticleSection = 2;
+NSUInteger const MainProgressSection = 0;
+NSUInteger const MainVideoSection = 1;
+NSUInteger const MainArticleSection = 2;
 
 
 // Number of results to display
@@ -169,6 +172,9 @@ NSUInteger const ArticleNumResults = 5; // 1 - 20
 - (void)dealloc
 {
     PLOG_TOP("dealloc !!!!!!!")
+    
+    // Unregister from all notifications
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 
@@ -204,6 +210,8 @@ NSUInteger const ArticleNumResults = 5; // 1 - 20
          [youTubeController setDelegate:self];
          
          [youTubeController setVideoId:self.videoArr[row][@"videoId"]];
+         [youTubeController setVideoTitle:self.videoArr[row][@"title"]];
+         [youTubeController setThumbnailUrl:self.videoArr[row][@"thumbnailUrl"]];
          
          NSNumber *bookmarkedNum = (NSNumber *)self.videoArr[row][@"bookmarked"];
          [youTubeController setBookmarked:[bookmarkedNum boolValue]];
@@ -218,6 +226,7 @@ NSUInteger const ArticleNumResults = 5; // 1 - 20
          [articleViewController setDelegate:self];
          
          [articleViewController setArticleId:self.articleArr[row][@"articleId"]];
+         [articleViewController setArticleTitle:self.articleArr[row][@"title"]];
          [articleViewController setUrl:self.articleArr[row][@"url"]];
          
          NSNumber *bookmarkedNum = (NSNumber *)self.articleArr[row][@"bookmarked"];
@@ -286,13 +295,10 @@ NSUInteger const ArticleNumResults = 5; // 1 - 20
 
 #pragma mark ArticleViewControllerDelegate
 
-- (void)bookmarkState:(BOOL)bookmarked forArticleId:(NSString *)articleId
+- (void)bookmarkState:(BOOL)bookmarked forArticleId:(NSString *)articleId title:(NSString *)title url:(NSString *)url
 {
     NSError *error = nil;
     
-    // Lookup title, url
-    NSString *title = self.articleDict[articleId][@"title"];
-    NSString *url = self.articleDict[articleId][@"url"];
     
     // Update our dictionary
     self.articleDict[articleId][@"bookmarked"] = [NSNumber numberWithBool:bookmarked];
@@ -336,7 +342,7 @@ NSUInteger const ArticleNumResults = 5; // 1 - 20
     }
     
     // Reload single row instead of calling reloadData.
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:ArticleSection];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:MainArticleSection];
     
     [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
 }
@@ -349,13 +355,10 @@ NSUInteger const ArticleNumResults = 5; // 1 - 20
 //
 // Lookup entry in self.videoDict, set the bookmark state, update self.videoArr
 // and reload the table.
-- (void)bookmarkState:(BOOL)bookmarked forVideoId:(NSString *)videoId
+- (void)bookmarkState:(BOOL)bookmarked forVideoId:(NSString *)videoId title:(NSString *)title thumbnailUrl:(NSString *)thumbnailUrl
 {
     NSError *error = nil;
     
-    // Lookup title, url
-    NSString *title = self.videoDict[videoId][@"title"];
-    NSString *thumbnailUrl = self.videoDict[videoId][@"thumbnailUrl"];
     
     // Update our dictionary
     self.videoDict[videoId][@"bookmarked"] = [NSNumber numberWithBool:bookmarked];
@@ -400,7 +403,7 @@ NSUInteger const ArticleNumResults = 5; // 1 - 20
     }
     
     // Reload single row instead of calling reloadData.
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:VideoSection];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:MainVideoSection];
     
     [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
 
@@ -417,15 +420,15 @@ NSUInteger const ArticleNumResults = 5; // 1 - 20
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
     switch (section) {
-        case ProgressSection:
+        case MainProgressSection:
             return @"Progress";
             break;
             
-        case VideoSection:
+        case MainVideoSection:
             return @"Videos";
             break;
             
-        case ArticleSection:
+        case MainArticleSection:
             return @"Articles";
             break;
             
@@ -460,11 +463,11 @@ NSUInteger const ArticleNumResults = 5; // 1 - 20
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     switch (section) {
-        case ProgressSection:
+        case MainProgressSection:
             return 1; // Placeholder
             break;
             
-        case VideoSection:
+        case MainVideoSection:
             if(self.validVideos){
                 return [self.videoArr count];
             }
@@ -473,7 +476,7 @@ NSUInteger const ArticleNumResults = 5; // 1 - 20
             }
             break;
             
-        case ArticleSection:
+        case MainArticleSection:
             if(self.validArticles){
                 return [self.articleArr count];
             }
@@ -508,11 +511,11 @@ NSUInteger const ArticleNumResults = 5; // 1 - 20
      NSInteger row = [indexPath row];
      
      switch (section) {
-         case ProgressSection:
+         case MainProgressSection:
              cell.textLabel.text = @"Not yet implemented";
              break;
              
-         case VideoSection:
+         case MainVideoSection:
              if(self.validVideos){
                  
                  // If video is bookmarked, show a checkmark.
@@ -528,7 +531,7 @@ NSUInteger const ArticleNumResults = 5; // 1 - 20
              }
              break;
              
-         case ArticleSection:
+         case MainArticleSection:
              if(self.validArticles){
                  
                  // If article is bookmarked, show a checkmark.
@@ -564,17 +567,17 @@ NSUInteger const ArticleNumResults = 5; // 1 - 20
     NSInteger section = [indexPath section];
     
     switch (section) {
-        case ProgressSection:
+        case MainProgressSection:
             // Nothing to do for this section.
             break;
             
-        case VideoSection:
+        case MainVideoSection:
             if(self.validVideos){
                 [self performSegueWithIdentifier:@"youtubeSegue" sender:self];
             }
             break;
             
-        case ArticleSection:
+        case MainArticleSection:
             if(self.validArticles){
                 [self performSegueWithIdentifier:@"articleSegue" sender:self];
             }
