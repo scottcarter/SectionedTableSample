@@ -17,6 +17,7 @@
 
 #import "CoreDataConnection.h"
 
+#import "BookmarkedTableViewCell.h"
 
 
 
@@ -276,6 +277,7 @@ NSUInteger const ArticleNumResults = 5; // 1 - 20
                   forControlEvents:UIControlEventValueChanged];
 
     
+    
     // Fetch initial content
     [self fetchContent];
     
@@ -496,69 +498,174 @@ NSUInteger const ArticleNumResults = 5; // 1 - 20
 
 
 
- - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-     
-     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MainCell" forIndexPath:indexPath];
- 
-     
-     // Use a text style that scales for Dynamic Text
-     cell.textLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleCaption1];
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    BookmarkedTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MainCell" forIndexPath:indexPath];
+    
+    
+    // Use a text style that scales for Dynamic Text
+    cell.textLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleCaption1];
+    
+    // Set the default accessoryType.  We will override to a checkmark if we find we are bookmarked.
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    
+    NSInteger section = [indexPath section];
+    NSInteger row = [indexPath row];
+    
+    switch (section) {
+        case MainProgressSection:
+            cell.textLabel.text = @"Not yet implemented";
+            cell.imageView.image = nil;
+            break;
+            
+        case MainVideoSection:
+            if(self.validVideos){
+                [self configureVideoCell:cell row:row];
+            }
+            else {
+                cell.textLabel.text = self.noVideosRowText;
+            }
+            break;
+            
+        case MainArticleSection:
+            if(self.validArticles){
+                
+                // If article is bookmarked, show a checkmark.
+                NSNumber *bookmarkedNum = (NSNumber *)self.articleArr[row][@"bookmarked"];
+                if([bookmarkedNum boolValue]){
+                    cell.accessoryType = UITableViewCellAccessoryCheckmark;
+                }
+                
+                cell.assetId = self.articleArr[row][@"articleId"];
+                cell.assetUrl = self.articleArr[row][@"url"];
+                cell.textLabel.text = self.articleArr[row][@"title"];
+            }
+            else {
+                cell.textLabel.text = self.noArticlesRowText;
+            }
+            cell.imageView.image = nil;
+            break;
+            
+        default:
+            EXCEPTION_LOG("Invalid table section %d",section)
+            return 0;
+            break;
+            
+            
+    }
+    
+    return cell;
+    
+}
 
-     // Set the default accessoryType.  We will override to a checkmark if we find we are bookmarked.
-     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-     
-     NSInteger section = [indexPath section];
-     NSInteger row = [indexPath row];
-     
-     switch (section) {
-         case MainProgressSection:
-             cell.textLabel.text = @"Not yet implemented";
-             break;
-             
-         case MainVideoSection:
-             if(self.validVideos){
-                 
-                 // If video is bookmarked, show a checkmark.
-                 NSNumber *bookmarkedNum = (NSNumber *)self.videoArr[row][@"bookmarked"];
-                 if([bookmarkedNum boolValue]){
-                     cell.accessoryType = UITableViewCellAccessoryCheckmark;
-                 }
-                 
-                 cell.textLabel.text = self.videoArr[row][@"title"];
-             }
-             else {
-                 cell.textLabel.text = self.noVideosRowText;
-             }
-             break;
-             
-         case MainArticleSection:
-             if(self.validArticles){
-                 
-                 // If article is bookmarked, show a checkmark.
-                 NSNumber *bookmarkedNum = (NSNumber *)self.articleArr[row][@"bookmarked"];
-                 if([bookmarkedNum boolValue]){
-                     cell.accessoryType = UITableViewCellAccessoryCheckmark;
-                 }
 
-                 cell.textLabel.text = self.articleArr[row][@"title"];
-             }
-             else {
-                 cell.textLabel.text = self.noArticlesRowText;
-             }
-             break;
-             
-         default:
-             EXCEPTION_LOG("Invalid table section %d",section)
-             return 0;
-             break;
+- (void)configureVideoCell:(BookmarkedTableViewCell *)cell
+                       row:(NSInteger)row
+{
+    
+    // If video is bookmarked, show a checkmark.
+    NSNumber *bookmarkedNum = (NSNumber *)self.videoArr[row][@"bookmarked"];
+    if([bookmarkedNum boolValue]){
+        cell.accessoryType = UITableViewCellAccessoryCheckmark;
+    }
+    
+    cell.assetId = self.videoArr[row][@"videoId"];
+    cell.assetUrl = self.videoArr[row][@"thumbnailUrl"];
+    cell.textLabel.text = self.videoArr[row][@"title"];
+    
+    
+    // Set placeholder for thumbnail image.
+    NSString* imagePath = [ [ NSBundle mainBundle] pathForResource:@"blank" ofType:@"png"];
+    
+    UIImage *image = [UIImage imageWithContentsOfFile:imagePath];
+    cell.imageView.image = image;
+    
+    // Note:
+    // In order to set the size, I included layoutSubviews in BookmarkedTableViewCell.m
+    
+    // Download image for cell
+    [self setImageForCell:cell];
+    
+}
 
-         
-     }
-     
-     return cell;
 
- }
 
+// Download image in separate queue.
+//
+- (void)setImageForCell:(BookmarkedTableViewCell *)cell
+{
+    
+    NSString *assetUrl = cell.assetUrl;
+    NSString *assetId = [cell.assetId copy];
+    
+    dispatch_queue_t downloadQueue = dispatch_queue_create("image downloader", NULL);  // NULL = Serial queue
+    dispatch_async(downloadQueue, ^{
+        
+        NSURL *url = [NSURL URLWithString:assetUrl];
+        NSData *data = [NSData dataWithContentsOfURL:url];
+        
+        
+        // Go back to main thread to display thumbnail.
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            UIImage *image = data ? [UIImage imageWithData:data] : nil;
+            
+            // NLOG("width = %f  height = %f",image.size.width, image.size.height)
+            
+            // http://stackoverflow.com/questions/8052999/check-if-a-specific-uitableviewcell-is-visible-in-a-uitableview
+            BOOL cellVisible = [self.tableView.visibleCells containsObject:cell];
+            
+            
+            // Is cell reference the same or did we get a new cell (recorded in cellArray) since starting the thread?
+            if(cellVisible && [cell.assetId isEqual:assetId]) {
+                
+                // Set the thumbnail image
+                cell.imageView.image = image;
+            }
+            
+        });
+        
+        
+    });
+    
+
+}
+
+
+
+// The dimensions of our video thumbnails are 120x90.  See method fetchVideos
+//
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSInteger section = [indexPath section];
+    
+    switch (section) {
+        case MainProgressSection:
+            return DEFAULT_ROW_HEIGHT;
+            break;
+            
+        case MainVideoSection:
+            if(self.validVideos){
+                return THUMBNAIL_ROW_HEIGHT;
+            }
+            else {
+                return DEFAULT_ROW_HEIGHT;
+            }
+            break;
+            
+        case MainArticleSection:
+            return DEFAULT_ROW_HEIGHT;
+            break;
+            
+        default:
+            EXCEPTION_LOG("Invalid table section %d",section)
+            return DEFAULT_ROW_HEIGHT;
+            break;
+    }
+    
+
+}
 
 
 // Handle row selection
@@ -948,6 +1055,11 @@ NSUInteger const ArticleNumResults = 5; // 1 - 20
                                            NSDictionary *json = item.JSON;
                                            NSString *videoId = json[@"id"];
                                            NSString *title = json[@"snippet"][@"title"];
+                                           
+                                           
+                                           // We will use the default thumbnail which has a resolution of 120x90
+                                           // https://developers.google.com/youtube/v3/docs/thumbnails
+                                           //
                                            NSDictionary *thumbnails = json[@"snippet"][@"thumbnails"];
                                            NSString *thumbnailUrl = thumbnails[@"default"][@"url"];
                                            

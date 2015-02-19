@@ -8,6 +8,8 @@
 #ifndef SectionedTableSample_Project_h
 #define SectionedTableSample_Project_h
 
+#import <UIKit/UIKit.h>
+
 
 // Introduce PROJECT_DEVELOPMENT macro (instead of relying on just DEBUG), so that we can
 // test development or release environment (with appropriate changes to defines below).
@@ -57,9 +59,40 @@
 FOUNDATION_EXPORT NSString *const YOUTUBE_API_KEY;
 
 
-
 // New York Times API Key
 FOUNDATION_EXPORT NSString *const NYTIMES_API_KEY;
+
+
+
+// Height of table row without thumbnail image.
+FOUNDATION_EXPORT CGFloat const DEFAULT_ROW_HEIGHT;
+
+// Height of table row with thumbnail image
+FOUNDATION_EXPORT CGFloat const THUMBNAIL_ROW_HEIGHT;
+
+
+// Width of UIImageView for thumbnail image
+// Use in BookmarkedTableViewCell.m
+FOUNDATION_EXPORT CGFloat const THUMBNAIL_WIDTH;
+
+
+// Height of UIImageView for thumbnail image
+// Use in BookmarkedTableViewCell.m
+FOUNDATION_EXPORT CGFloat const THUMBNAIL_HEIGHT;
+
+
+// X offset for UIImageView for thumbnail image
+//
+// Use in BookmarkedTableViewCell.m
+FOUNDATION_EXPORT CGFloat const THUMBNAIL_HEIGHT_X_OFFSET;
+
+
+// Y offset for UIImageView for thumbnail image
+//
+// Use in BookmarkedTableViewCell.m
+FOUNDATION_EXPORT CGFloat const THUMBNAIL_HEIGHT_Y_OFFSET;
+
+
 
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++++

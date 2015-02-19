@@ -29,6 +29,8 @@
 		A746E88C1A951177007D2588 /* Videos+Create.m in Sources */ = {isa = PBXBuildFile; fileRef = A746E88B1A951177007D2588 /* Videos+Create.m */; };
 		A746E88F1A951F19007D2588 /* CoreDataConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = A746E88E1A951F19007D2588 /* CoreDataConnection.m */; };
 		A746E8951A957436007D2588 /* BookmarkedTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A746E8941A957436007D2588 /* BookmarkedTableViewCell.m */; };
+		A746E8971A959BA2007D2588 /* blank.png in Resources */ = {isa = PBXBuildFile; fileRef = A746E8961A959BA2007D2588 /* blank.png */; };
+		A746E89A1A961A9C007D2588 /* TableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A746E8991A961A9C007D2588 /* TableViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -441,6 +443,9 @@
 		A746E88E1A951F19007D2588 /* CoreDataConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreDataConnection.m; sourceTree = "<group>"; };
 		A746E8931A957436007D2588 /* BookmarkedTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookmarkedTableViewCell.h; sourceTree = "<group>"; };
 		A746E8941A957436007D2588 /* BookmarkedTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookmarkedTableViewCell.m; sourceTree = "<group>"; };
+		A746E8961A959BA2007D2588 /* blank.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blank.png; sourceTree = "<group>"; };
+		A746E8981A961A9C007D2588 /* TableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableViewController.h; sourceTree = "<group>"; };
+		A746E8991A961A9C007D2588 /* TableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableViewController.m; sourceTree = "<group>"; };
 		B9B6A5A7702AE24045ACD35C /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		DC9524CA08CDE10A3B885A31 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -518,6 +523,7 @@
 		A746E6C91A9395FA007D2588 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				A746E8961A959BA2007D2588 /* blank.png */,
 				A746E6CD1A9395FA007D2588 /* AppDelegate.h */,
 				A746E6CE1A9395FA007D2588 /* AppDelegate.m */,
 				A746E6CA1A9395FA007D2588 /* Info.plist */,
@@ -1016,6 +1022,8 @@
 		A746E8911A95245F007D2588 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				A746E8981A961A9C007D2588 /* TableViewController.h */,
+				A746E8991A961A9C007D2588 /* TableViewController.m */,
 				A746E6F51A939A10007D2588 /* MainTableViewController.h */,
 				A746E6F61A939A10007D2588 /* MainTableViewController.m */,
 				A746E6F81A939A69007D2588 /* BookmarksTableViewController.h */,
@@ -1160,6 +1168,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A746E8971A959BA2007D2588 /* blank.png in Resources */,
 				A746E6D81A9395FA007D2588 /* Main.storyboard in Resources */,
 				A746E6DD1A9395FA007D2588 /* LaunchScreen.xib in Resources */,
 				A746E6DA1A9395FA007D2588 /* Images.xcassets in Resources */,
@@ -1226,6 +1235,7 @@
 				A746E6CC1A9395FA007D2588 /* main.m in Sources */,
 				A746E8861A9510EA007D2588 /* Articles.m in Sources */,
 				A746E8761A93CFC1007D2588 /* YouTubeViewController.m in Sources */,
+				A746E89A1A961A9C007D2588 /* TableViewController.m in Sources */,
 				A746E6FE1A939C7F007D2588 /* GTLCommon_Sources.m in Sources */,
 				A746E8711A93A43F007D2588 /* Project.m in Sources */,
 				A746E8731A93AB26007D2588 /* GTLYouTube_Sources.m in Sources */,

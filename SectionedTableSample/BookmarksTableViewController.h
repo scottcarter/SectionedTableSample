@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+#import "TableViewController.h"
+
 
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 //                    Forward Declarations
@@ -34,7 +36,7 @@
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 //
 #pragma mark -
-@interface BookmarksTableViewController : UITableViewController
+@interface BookmarksTableViewController : TableViewController
 
 
 
