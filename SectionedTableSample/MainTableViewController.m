@@ -435,7 +435,7 @@ NSUInteger const ArticleNumResults = 5; // 1 - 20
             break;
             
         default:
-            EXCEPTION_LOG("Invalid table section %d",section)
+            EXCEPTION_LOG("Invalid table section %ld",(long)section)
             return 0;
             break;
     }
@@ -470,7 +470,7 @@ NSUInteger const ArticleNumResults = 5; // 1 - 20
             break;
             
         default:
-            EXCEPTION_LOG("Invalid table section %d",section)
+            EXCEPTION_LOG("Invalid table section %ld",(long)section)
             return 0;
             break;
     }
@@ -530,7 +530,7 @@ NSUInteger const ArticleNumResults = 5; // 1 - 20
             break;
             
         default:
-            EXCEPTION_LOG("Invalid table section %d",section)
+            EXCEPTION_LOG("Invalid table section %ld",(long)section)
             return 0;
             break;
             
@@ -591,7 +591,7 @@ NSUInteger const ArticleNumResults = 5; // 1 - 20
             break;
             
         default:
-            EXCEPTION_LOG("Invalid table section %d",section)
+            EXCEPTION_LOG("Invalid table section %ld",(long)section)
             return DEFAULT_ROW_HEIGHT;
             break;
     }
@@ -623,7 +623,7 @@ NSUInteger const ArticleNumResults = 5; // 1 - 20
             break;
             
         default:
-            EXCEPTION_LOG("Invalid table section %d",section)
+            EXCEPTION_LOG("Invalid table section %ld",(long)section)
             break;
     }
 

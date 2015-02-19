@@ -269,7 +269,7 @@ NSUInteger const BookmarksArticleSection = 1;
             break;
             
         default:
-            EXCEPTION_LOG("Invalid table section %d",section)
+            EXCEPTION_LOG("Invalid table section %ld",(long)section)
             return 0;
             break;
     }
@@ -294,7 +294,7 @@ NSUInteger const BookmarksArticleSection = 1;
             break;
             
         default:
-            EXCEPTION_LOG("Invalid table section %d",section)
+            EXCEPTION_LOG("Invalid table section %ld",(long)section)
             return 0;
             break;
     }
@@ -325,7 +325,7 @@ NSUInteger const BookmarksArticleSection = 1;
             break;
 
         default:
-            EXCEPTION_LOG("Invalid table section %d",section)
+            EXCEPTION_LOG("Invalid table section %ld",(long)section)
             break;
     }
     
@@ -386,7 +386,7 @@ NSUInteger const BookmarksArticleSection = 1;
             break;
             
         default:
-            EXCEPTION_LOG("Invalid table section %d",section)
+            EXCEPTION_LOG("Invalid table section %ld",(long)section)
             return DEFAULT_ROW_HEIGHT;
             break;
     }
@@ -411,7 +411,7 @@ NSUInteger const BookmarksArticleSection = 1;
             break;
             
         default:
-            EXCEPTION_LOG("Invalid table section %d",section)
+            EXCEPTION_LOG("Invalid table section %ld",(long)section)
             break;
     }
     
