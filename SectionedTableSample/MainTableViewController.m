@@ -443,24 +443,6 @@ NSUInteger const ArticleNumResults = 5; // 1 - 20
 }
 
 
-// Customize the header.   At a minimum we wish to use dynamic text.
-//
-// http://stackoverflow.com/questions/19802336/ios-7-changing-font-size-for-uitableview-section-headers
-//
-- (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section {
-    UITableViewHeaderFooterView *header = (UITableViewHeaderFooterView *)view;
-    
-    header.textLabel.textColor = [UIColor brownColor];
-    header.textLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline];
-    
-    // Need to resize the frame after changing font.
-    CGRect headerFrame = header.frame;
-    header.textLabel.frame = headerFrame;
-    
-    //header.textLabel.textAlignment = NSTextAlignmentCenter;
-}
-
-
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -575,62 +557,12 @@ NSUInteger const ArticleNumResults = 5; // 1 - 20
     cell.textLabel.text = self.videoArr[row][@"title"];
     
     
-    // Set placeholder for thumbnail image.
-    NSString* imagePath = [ [ NSBundle mainBundle] pathForResource:@"blank" ofType:@"png"];
-    
-    UIImage *image = [UIImage imageWithContentsOfFile:imagePath];
-    cell.imageView.image = image;
-    
-    // Note:
-    // In order to set the size, I included layoutSubviews in BookmarkedTableViewCell.m
-    
-    // Download image for cell
-    [self setImageForCell:cell];
+    // Set thumbnail image
+    [super setImageForCell:cell];
     
 }
 
 
-
-// Download image in separate queue.
-//
-- (void)setImageForCell:(BookmarkedTableViewCell *)cell
-{
-    
-    NSString *assetUrl = cell.assetUrl;
-    NSString *assetId = [cell.assetId copy];
-    
-    dispatch_queue_t downloadQueue = dispatch_queue_create("image downloader", NULL);  // NULL = Serial queue
-    dispatch_async(downloadQueue, ^{
-        
-        NSURL *url = [NSURL URLWithString:assetUrl];
-        NSData *data = [NSData dataWithContentsOfURL:url];
-        
-        
-        // Go back to main thread to display thumbnail.
-        dispatch_async(dispatch_get_main_queue(), ^{
-            
-            UIImage *image = data ? [UIImage imageWithData:data] : nil;
-            
-            // NLOG("width = %f  height = %f",image.size.width, image.size.height)
-            
-            // http://stackoverflow.com/questions/8052999/check-if-a-specific-uitableviewcell-is-visible-in-a-uitableview
-            BOOL cellVisible = [self.tableView.visibleCells containsObject:cell];
-            
-            
-            // Is cell reference the same or did we get a new cell (recorded in cellArray) since starting the thread?
-            if(cellVisible && [cell.assetId isEqual:assetId]) {
-                
-                // Set the thumbnail image
-                cell.imageView.image = image;
-            }
-            
-        });
-        
-        
-    });
-    
-
-}
 
 
 

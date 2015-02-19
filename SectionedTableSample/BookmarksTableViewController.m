@@ -277,25 +277,6 @@ NSUInteger const BookmarksArticleSection = 1;
 }
 
 
-// Customize the header.   At a minimum we wish to use dynamic text.
-//
-// http://stackoverflow.com/questions/19802336/ios-7-changing-font-size-for-uitableview-section-headers
-//
-- (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section {
-    UITableViewHeaderFooterView *header = (UITableViewHeaderFooterView *)view;
-    
-    header.textLabel.textColor = [UIColor brownColor];
-    header.textLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline];
-    
-    // Need to resize the frame after changing font.
-    CGRect headerFrame = header.frame;
-    header.textLabel.frame = headerFrame;
-    
-    //header.textLabel.textAlignment = NSTextAlignmentCenter;
-}
-
-
-
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 
@@ -367,8 +348,11 @@ NSUInteger const BookmarksArticleSection = 1;
     
     cell.assetId = videoId;
     cell.assetUrl = thumbnailUrl;
-    
     cell.textLabel.text = title;
+    
+    // Set thumbnail image
+    [super setImageForCell:cell];
+    
 }
 
 - (void)configureArticleCell:(BookmarkedTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
@@ -382,6 +366,32 @@ NSUInteger const BookmarksArticleSection = 1;
     cell.assetUrl = url;
     
     cell.textLabel.text = title;
+    cell.imageView.image = nil;
+}
+
+
+// The dimensions of our video thumbnails are 120x90.  See method fetchVideos
+//
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSInteger section = [indexPath section];
+    
+    switch (section) {
+        case BookmarksVideoSection:
+            return THUMBNAIL_ROW_HEIGHT;
+            break;
+            
+        case BookmarksArticleSection:
+            return DEFAULT_ROW_HEIGHT;
+            break;
+            
+        default:
+            EXCEPTION_LOG("Invalid table section %d",section)
+            return DEFAULT_ROW_HEIGHT;
+            break;
+    }
+    
+    
 }
 
 

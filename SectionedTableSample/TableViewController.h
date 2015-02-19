@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+#import "BookmarkedTableViewCell.h"
+
 
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 //                    Forward Declarations
@@ -65,7 +67,9 @@
 #pragma mark -
 #pragma mark Instance method declarations
 
-// None
+- (void)setImageForCell:(BookmarkedTableViewCell *)cell;
+
+
 
 @end
 
