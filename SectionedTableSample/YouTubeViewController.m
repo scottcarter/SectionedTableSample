@@ -129,7 +129,17 @@
     }
     
     // Load the video
-    [self.youTubePlayerView loadWithVideoId:self.videoId];
+    //
+    // Reference: https://developers.google.com/youtube/player_parameters?playerVersion=HTML5#start
+    //
+    NSDictionary *playerVars = @{
+                                 @"controls" : @0,
+                                 @"playsinline" : @0,
+                                 @"autoplay" : @1,
+                                 @"showinfo" : @0,
+                                 @"modestbranding" : @1
+                                 };
+    [self.youTubePlayerView loadWithVideoId:self.videoId playerVars:playerVars];
     
 }
 
