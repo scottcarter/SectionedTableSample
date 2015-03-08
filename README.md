@@ -2,8 +2,8 @@
 
 # Screenshot
 
-![example1 img](screenshot/example1.png?raw=true)
 
+<img src="screenshot/example1.png" width=480 height=568 />
 
 # Code challenge overview
 
