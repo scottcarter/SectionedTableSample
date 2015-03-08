@@ -17,7 +17,7 @@ This is a project that was created as a result of a code challenge.  The origina
 I decided to submit what was available after two days of work.    I got to everything except the Progress section in the first tab mentioned below.
 
 
-# Challenge details
+# Challenge Details
 
 In the source directory, please create a new iOS project.  Create a two-tab application:
 
@@ -38,6 +38,18 @@ Pull articles from a third party API. Display the article titles in a list. Tapp
 Should display a list of all bookmarked content. This list of bookmarked content should be locally persisted with Core Data and bookmarked content should be reflected in the 1st tab (e.g the articles and videos should have an indicator of being bookmarked).
 
 The app should also handle no/bad network conditions appropriately from a UI perspective.
+
+
+# Challenge Notes
+
+I wrote a blog article about this project and included some detailed notes at:
+
+[Sectioned table example with videos and articles] (http://finalize.com/2015/03/07/sectioned-table-example-with-videos-and-articles/)
+
+
+
+
+
 
 
 
