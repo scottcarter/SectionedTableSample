@@ -3,7 +3,7 @@
 # Screenshot
 
 
-<img src="screenshot/example1.png" width=480 height=568 />
+<img src="screenshot/example1.png" width=320 height=568 />
 
 # Code challenge overview
 
