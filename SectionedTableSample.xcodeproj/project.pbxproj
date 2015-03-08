@@ -73,6 +73,7 @@
 
 /* Begin PBXFileReference section */
 		4EAF4891C51AB6F847F40B82 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		A7155E171AABF297002342DF /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		A746E6C61A9395FA007D2588 /* SectionedTableSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SectionedTableSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A746E6CA1A9395FA007D2588 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A746E6CB1A9395FA007D2588 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -489,6 +490,7 @@
 		A746E6BD1A9395FA007D2588 = {
 			isa = PBXGroup;
 			children = (
+				A7155E171AABF297002342DF /* README.md */,
 				A746E6C81A9395FA007D2588 /* SectionedTableSample */,
 				A746E6E51A9395FA007D2588 /* SectionedTableSampleTests */,
 				A746E6C71A9395FA007D2588 /* Products */,
